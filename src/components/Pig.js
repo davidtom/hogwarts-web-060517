@@ -6,8 +6,10 @@ class Pig extends React.Component {
     super()
 
     this.state = {
-      displayCardInfo: false
+      displayCardInfo: false,
+      display: 'inline-block'
     }
+
   }
 
   pigFileName(){
@@ -15,16 +17,22 @@ class Pig extends React.Component {
     return "./hog-imgs/" + this.props.pig.name.toLowerCase().split(" ").join("_") + ".jpg"
   }
 
-  toggleDisplay = event => {
+  toggleDisplay = () => {
     this.setState({
       displayCardInfo: !this.state.displayCardInfo
     })
   }
 
+  terminatePig = (event) => {
+    this.setState({
+      display: 'none'
+    })
+  }
+
   render(){
     return(
-      <div className="ui card" onClick={this.toggleDisplay} style={{display: 'inline-block', marginLeft: "10px", marginRight: "10px"}}>
-        <div className="image">
+      <div className="ui card" style={{display: this.state.display, marginLeft: "10px", marginRight: "10px"}}>
+        <div className="image" onClick={this.toggleDisplay} >
           <img src= {this.pigFileName()} />
         </div>
         <div className="content">
@@ -39,10 +47,13 @@ class Pig extends React.Component {
           </div>}
         </div>
         <div className="extra content">
-          <a>
+          <div style={{float: 'left'}}>
             <i className="trophy icon"></i>
             {this.props.pig.highestMedalAchieved}
-          </a>
+          </div>
+          <div style={{float: 'right'}}>
+            <i className="trash outline icon" onClick={this.terminatePig}></i>
+          </div>
         </div>
       </div>
     )
